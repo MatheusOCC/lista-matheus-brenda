@@ -25,10 +25,11 @@ def run():
     tab1, tab2 = st.tabs(['A Comprar','Já Temos'])
     with tab1:
       for row in df_comprar.itertuples():
-        st.warning(row.item + ', por: ' + str(row.preço))
+        st.warning(f"**{row.item}** ({row.preço}). [Abrir no navegador]({row.link})")
+
     with tab2:
       for row in df_temos.itertuples():
-        st.success(row.item + ', por: ' + str(row.preço))
+        st.success(f"**{row.item}** ({row.preço}). [Abrir no navegador]({row.link})")
 
 if __name__ == "__main__":
     run()
