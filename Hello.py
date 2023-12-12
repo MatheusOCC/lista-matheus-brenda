@@ -29,7 +29,7 @@ def run():
 
     with tab2:
       for row in df_temos.itertuples():
-        st.success(f"**{row.item}** ({row.preço}). [Abrir no navegador]({row.link})")
+        st.success(f"**{row.item}**")
 
 if __name__ == "__main__":
     run()
