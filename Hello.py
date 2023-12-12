@@ -1,7 +1,15 @@
 import streamlit as st
 from streamlit.logger import get_logger
+from streamlit_gsheets import GSheetsConnection
 
 LOGGER = get_logger(__name__)
+
+
+# Create a connection object.
+conn = st.connection("gsheets", type=GSheetsConnection)
+
+df = conn.read()
+
 
 def run():
     st.set_page_config(
@@ -9,6 +17,10 @@ def run():
         page_icon="👋",
         initial_sidebar_state="collapsed" 
     )
+    
+    # Print results.
+    for row in df.itertuples():
+        st.write(f"{row.name} has a :{row.pet}:")
 
     st.write("# Listinha de Matheus e Brenda")
     tab1, tab2 = st.tabs(['A Comprar','Já Temos'])
