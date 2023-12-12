@@ -10,7 +10,13 @@ def run():
         page_icon="👋",
         initial_sidebar_state="collapsed" 
     )
-    
+
+    # Create a connection object.
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    df = conn.read(spreadsheet = "https://docs.google.com/spreadsheets/d/1TEsfTkUdxnOjCb_z1g5M9wOyaCLQzQegVhgDSjw5aYE/edit#gid=0")
+    df_comprar = df.query('temos == "nao"')
+    df_temos = df.query('temos == "sim"')
+
     # # Print results.
     # for row in df.itertuples():
     #     st.write(f"{row.name} has a :{row.pet}:")
@@ -18,18 +24,11 @@ def run():
     st.write("# Listinha de Matheus e Brenda")
     tab1, tab2 = st.tabs(['A Comprar','Já Temos'])
     with tab1:
-      st.warning('[Nintendo Switch - 2000](https://www.amazon.com.br/Nintendo-Switch-Model-Legend-Kingdom/dp/B0BZK5M9TD/ref=asc_df_B0BZK5M9TD/?tag=googleshopp00-20&linkCode=df0&hvadid=648484803043&hvpos=&hvnetw=g&hvrand=17180737092398948441&hvpone=&hvptwo=&hvqmt=&hvdev=c&hvdvcmdl=&hvlocint=&hvlocphy=1001533&hvtargid=pla-2187569339971&mcid=cd361c07374e3517a6961f1980b8e0c4&th=1)')
-      st.warning('[Televisão 40"](https://www.amazon.com.br/Samsung-Smart-Crystal-UHD-CU7700/dp/B0C1538ZJ4/ref=sr_1_3?qid=1700441101&refinements=p_n_size_browse-bin%3A17247918011%2Cp_89%3ASAMSUNG&rnid=18120432011&s=electronics&sr=1-3&ufe=app_do%3Aamzn1.fos.25548f35-0de7-44b3-b28e-0f56f3f96147)')
+      for row in df_comprar.itertuples():
+        st.warning(row.item + ', por: ' + str(row.preço))
     with tab2:
-      st.success('b')
-
-    # Create a connection object.
-    conn = st.connection("gsheets", type=GSheetsConnection)
-
-    st.write(conn)
-
-    df = conn.read(worksheet='listinha')
-
+      for row in df_temos.itertuples():
+        st.success(row.item + ', por: ' + str(row.preço))
 
 if __name__ == "__main__":
     run()
