@@ -4,13 +4,6 @@ from streamlit_gsheets import GSheetsConnection
 
 LOGGER = get_logger(__name__)
 
-
-# Create a connection object.
-conn = st.connection("gsheets", type=GSheetsConnection)
-
-df = conn.read()
-
-
 def run():
     st.set_page_config(
         page_title="Hello",
@@ -18,9 +11,9 @@ def run():
         initial_sidebar_state="collapsed" 
     )
     
-    # Print results.
-    for row in df.itertuples():
-        st.write(f"{row.name} has a :{row.pet}:")
+    # # Print results.
+    # for row in df.itertuples():
+    #     st.write(f"{row.name} has a :{row.pet}:")
 
     st.write("# Listinha de Matheus e Brenda")
     tab1, tab2 = st.tabs(['A Comprar','Já Temos'])
@@ -29,6 +22,14 @@ def run():
       st.warning('[Televisão 40"](https://www.amazon.com.br/Samsung-Smart-Crystal-UHD-CU7700/dp/B0C1538ZJ4/ref=sr_1_3?qid=1700441101&refinements=p_n_size_browse-bin%3A17247918011%2Cp_89%3ASAMSUNG&rnid=18120432011&s=electronics&sr=1-3&ufe=app_do%3Aamzn1.fos.25548f35-0de7-44b3-b28e-0f56f3f96147)')
     with tab2:
       st.success('b')
+
+    # Create a connection object.
+    conn = st.connection("gsheets", type=GSheetsConnection)
+
+    st.write(conn)
+
+    df = conn.read(worksheet='listinha')
+
 
 if __name__ == "__main__":
     run()
